@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:js": "browserify -t hoganify -t [ babelify --presets [ es2015 ] ] src/js/calendar.js > dist/calendar.js",
+    "build:js": "browserify -t hoganify -t [ babelify --presets [ es2015 ] ] src/js/calendar.js | uglifyjs > dist/calendar.js",
     "prebuild:css": "node-sass src/sass/main.scss -o dist/",
     "build:css": "postcss --use autoprefixer --autoprefixer.browsers \"> 0.5%\" -o dist/main.css dist/main.css",
     "watch:css": "node-sass --watch src/sass/ -o dist"
@@ -22,6 +22,7 @@
     "hoganify": "^0.2.0",
     "moment": "^2.15.1",
     "node-sass": "^3.10.1",
-    "postcss-cli": "^2.6.0"
+    "postcss-cli": "^2.6.0",
+    "uglify-js": "^2.7.3"
   }
 }
