@@ -5,17 +5,25 @@
                 <div class="day" data-index="{{dataIndex}}">
                     {{#type}}
                         <span class="type {{type}}">{{type}}</span>
-                    {{/type}}
-                        </span>
-                        <div class="location-letter">{{locationLetter}}</div>
-                        <span class="numeric">{{number}}</span>
-                        <div class="meta">
-                            <span class="month">{{month}}</span>
-                            <span class="weekday">{{weekday}}</span>
-                        </div>
+                    {{/type}} 
+                    <span class="numeric">{{number}}</span>
+                    <div class="meta">
+                        <span class="meta-day">{{day}}</span>
+                        <span class="meta-time">{{time}}</span>
+                    </div>
+
+                    <div class="badge-footer">
+                        {{#lineup}}
+                            <span class="lineup">{{lineup}}</span>
+                        {{/lineup}}
+                        {{#location}}
+                            <span class="location">{{location}}</span>
+                        {{/location}} 
                         {{#available}}
-                            <span class="fa fa-check available" title="You are marked Available For this Match"></span>
-                        {{/available}}
+                            <span class="fa fa-check available"
+                                  title="You are marked Available For this Match"></span>
+                        {{/available}} 
+                    </div>
                 </div>
             {{/days}}
         </div>

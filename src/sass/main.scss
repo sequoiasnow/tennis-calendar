@@ -27,7 +27,7 @@ $calendar__day-selected-color: rgb(74, 155, 218);
   box-sizing: border-box;
 
   // Temporary perhaps.
-  margin: 40px auto;
+  margin: 1em;
 
   // Contain the contents.
   display: flex;
@@ -149,15 +149,7 @@ $calendar__day-selected-color: rgb(74, 155, 218);
 
 // Show the numeric in the background somewhat faded.
 .calendar__days .day .location-letter {
-  position: absolute; 
-  top: 15%;
-  left: 10%;
-  width: 80%;
-  height: 80%;
-  opacity: 0.07;
-  text-align: center;
-  font-size: $calendar__width / 2 / 3 * 0.7;
-  font-weight: bold;
+  display: none;
 }
 
 // Show the checkmark for availibility of the current match.
@@ -165,6 +157,32 @@ $calendar__day-selected-color: rgb(74, 155, 218);
   position: absolute;
   bottom: 3px;
   right: 3px;
+  font-size: 1.4em;
+}
+
+.calendar__days .day .meta {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.calendar__days .day .badge-footer {
+  position: absolute;
+  bottom: 0;
+  right: 5%;
+  width: 90%;
+  text-align: center;
+  font-size: 0.7em;
+}
+
+.calendar__days .day .lineup {
+  position: absolute;
+  left: 3px;
+  bottom: 0;
 }
 
 // Create the title bar at the top of the element.

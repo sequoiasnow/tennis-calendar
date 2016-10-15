@@ -14,7 +14,7 @@ const Globals = {
     todaysDateFormat: 'dddd, D MMMM',
     shortDayFormat: 'YYYY-MM-DD',
     eventDayFormat: 'MMMM D h:m A',
-    shortTimeFormat: 'h:ma',
+    shortTimeFormat: 'h:m A',
     
     
     // Use hoganify to render into functions
@@ -58,7 +58,7 @@ class Calendar {
         this.$el    = $(el);
         this.days   = _days;
         this.events = _events;
-        
+
         // Create the initial html, this is as simple as rendering the template,
         // which is not so simple at all...
         let index = 0;
@@ -68,7 +68,8 @@ class Calendar {
                     dataIndex: index++,
                     locationLetter: (d.location == 'home' || d.location == 'h') ? 'H' : 'A',
                     day: d.date.format('ddd D'),
-                    time: d.date.format(Globals.shortTimeFormat)
+                    month: d.date.format('MMM'),
+                    weekday: d.date.format('ddd') 
                 });
 
                 if ( ! info.available ) {
