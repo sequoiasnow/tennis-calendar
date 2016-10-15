@@ -1,0 +1,181 @@
+$calendar__width: 600px;
+$calendar__height: 300px;
+$calendar__border-radius: 0;
+$calendar__event-background: rgb(247, 115, 94);
+$calendar__event-color: rgb(250, 194, 158);
+$calendar__day-color1: rgb(250, 250, 250);
+$calendar__day-color2: rgb(240, 240, 240);
+$calendar__day-selected-color: rgb(74, 155, 218);
+
+%event-type-background-color {
+  background-color: rgb(159, 234, 245);
+
+  &.practice {
+    background-color: rgb(64, 246, 72);
+  }
+
+  &.match {
+    background-color: rgb(244, 176, 65);
+  }
+}
+
+.calendar {
+  max-width: 100%;
+  width: $calendar__width;
+  min-height: $calendar__height;
+  border-radius: $calendar__border-radius;
+  box-sizing: border-box;
+
+  // Temporary perhaps.
+  margin: 40px auto;
+
+  // Contain the contents.
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+  position: relative;
+
+  // This is temproray, and should be removed.
+  font-family: avenir, helvetica, sans-serif;
+  font-weight: 300;
+
+  // Create a card effect
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+}
+
+// Create some default behavior
+.calendar * {
+  box-sizing: border-box;
+}
+
+///// EVENT /////
+
+.calendar__event {
+  width: 50%;
+  padding: 20px;
+  background-color: $calendar__event-background;
+  color: $calendar__event-color;
+}
+
+.calendar__event .current-day {
+  font-size: 1.5em;
+}
+
+.calendar__event .event {
+  margin: 8px 2px;
+}
+
+.calendar__event .table-title {
+  @extend %event-type-background-color;
+  width: 100%;
+  margin-top: 5px;
+  text-align: center;
+  border-radius: 2px;
+  color: white;
+}
+
+.calendar__event table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.calendar__event table, th, td  {
+  border: 1px solid $calendar__event-color;
+}
+
+.calendar__event table td {
+  padding: 3px;
+}
+
+
+.calendar__event .event .date {
+  font-size: 0.7em;
+  color: rgb(230, 230, 230);
+  display: block;
+}
+
+.calendar__event .event a {
+  display: block;
+  text-decoration: none;
+  font-size: 1em;
+  color: white;
+}
+
+
+///// DISPLAY /////
+
+.calendar__display {
+  width: 50%;
+}
+
+.calendar__days {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.calendar__days .day {
+  width: (100% / 3);
+  height: $calendar__width / 2 / 3;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s;
+  overflow: hidden;
+
+  // Center the contnet of the element.
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: $calendar__day-color1;
+
+  &:nth-child(2n+1) {
+    background-color: $calendar__day-color2;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    z-index: 10;
+  }
+
+  &.selected {
+    border: 2px solid $calendar__day-selected-color;
+    border-radius: 5px;
+  }
+}
+
+// Show the numeric in the background somewhat faded.
+.calendar__days .day .location-letter {
+  position: absolute; 
+  top: 15%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  opacity: 0.07;
+  text-align: center;
+  font-size: $calendar__width / 2 / 3 * 0.7;
+  font-weight: bold;
+}
+
+// Show the checkmark for availibility of the current match.
+.calendar__days .day .available {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+}
+
+// Create the title bar at the top of the element.
+.calendar__days .day .type {
+  @extend %event-type-background-color;
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+

@@ -1,0 +1,36 @@
+<section class="calendar widget">
+    <div class="calendar__display">
+        <div class="calendar__days">
+            {{#days}}
+                <div class="day" data-index="{{dataIndex}}">
+                    {{#type}}
+                        <span class="type {{type}}">{{type}}</span>
+                    {{/type}}
+                        </span>
+                        <div class="location-letter">{{locationLetter}}</div>
+                        <span class="numeric">{{number}}</span>
+                        <div class="meta">
+                            <span class="month">{{month}}</span>
+                            <span class="weekday">{{weekday}}</span>
+                        </div>
+                        {{#available}}
+                            <span class="fa fa-check available" title="You are marked Available For this Match"></span>
+                        {{/available}}
+                </div>
+            {{/days}}
+        </div>
+    </div>
+    <div class="calendar__event">
+        <span class="current-day">
+            {{todaysDate}}
+        </span>
+
+        <div class="current-events">
+            {{#todaysEvent}}
+                {{> event}}
+            {{/todaysEvent}}
+        </div>
+
+        <div class="google-map"></div>
+    </div>
+</section>

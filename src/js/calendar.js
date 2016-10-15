@@ -1,0 +1,142 @@
+////////////////// --- THE NEW WAY OF DOOING THINGS --- //////////////////
+
+// Libaries utilized throught the project.
+const moment = require('moment');
+
+
+// Include at earlier conveniance the prerendered tempaltes.
+const calendarTemplate = require('../templates/calendar.mustache');
+const eventTemplate = require('../templates/event.mustache');
+
+/// Global information about the calendar for the creation of days and the
+/// like.
+const Globals = {
+    todaysDateFormat: 'dddd, D MMMM',
+    shortDayFormat: 'YYYY-MM-DD',
+    eventDayFormat: 'MMMM D h:m A',
+    shortTimeFormat: 'h:m A',
+    
+    
+    // Use hoganify to render into functions
+    calendarTemplate,
+    eventTemplate,
+
+    // The musthaves for any event object, this is used to validate the
+    // events when they are passed.
+    requiredEventKeys: ['start', 'title', 'link']
+};
+Object.freeze(Globals);
+
+/// The claender object is created with events of a certain format, and
+/// an element to attatch to.
+class Calendar {
+    /// Create a new instance of Calendar to bind to a certain element,
+    /// With certain events.
+    constructor(el, events = []) {
+        // Santize evetns by order based on timestamp.
+        var _events = events.map(function(e) {
+            // Verify the element works properly.
+            Globals.requiredEventKeys.forEach((key) => {
+                if ( ! e.hasOwnProperty(key) ) {
+                    console.error(`Error, event must have ${key} property`);
+                }
+            });
+
+            // Create an updated object with updated fields date.
+            return Object.assign({}, e, {
+                date: moment(e.start * 1000)
+            });
+        });
+
+        // Days contain information for a specific day, they take this information
+        // from the events.
+        var _days = _events.map(e => {
+            return moment(e.date.format(Globals.shortDayFormat), Globals.shortDayFormat);
+        });
+
+        // Assign events, days and elements.
+        this.$el    = $(el);
+        this.days   = _days;
+        this.events = _events;
+
+        // Create the initial html, this is as simple as rendering the template,
+        // which is not so simple at all...
+        let index = 0;
+        this.$el.html(Globals.calendarTemplate.render({
+            days: _events.map((d) => {
+                let info = Object.assign({}, d, {
+                    dataIndex: index++,
+                    locationLetter: (d.location == 'home' || d.location == 'h') ? 'H' : 'A',
+                    number: d.date.format('D'),
+                    month: d.date.format('MMM'),
+                    weekday: d.date.format('ddd') 
+                });
+                return info;
+            }),
+            todaysDate: moment().format(Globals.todaysDateFormat)
+        }));
+
+        // Run the binding events.
+        this.bindEvents(this.$el);
+    }
+
+    /// Binds events to functions using jQuery.
+    bindEvents(el) {
+        var dispatchFunc = this.makeCurrent;
+        var self = this;
+        el.find('.calendar__days .day').on('click', function() {
+            var index = $(this).data('index');
+
+            // Add the class that allows us to target a certain day as selected.
+            $('.calendar__days .day.selected').removeClass('selected');
+            $(this).addClass('selected');
+                
+            dispatchFunc.call(self, index);
+        });
+    }
+
+    /// Takes a day and returns all events that are occuring on that day.
+    /// Should be in the `shortDayFormat`
+    eventsOnDay(day) {
+        return this.events.filter((e) => {
+            return e.date.format(Globals.shortDayFormat) == day
+        });
+    }
+
+    /// patches an event to the template, this could be the result of a
+    /// click or something similiar.
+    makeCurrent(index) {
+        // Access all the jquery properties for objects.
+        var calEvent      = this.$el.find('.calendar__event').first(),
+            currentDay    = calEvent.find('.current-day').first(),
+            currentEvents = calEvent.find('.current-events').first(),
+            map           = calEvent.find('.google-map').first();
+
+        // Find all events occuring on the given day.
+        var event = this.events[parseInt(index, 10)];
+
+        // Show the calEvent with the required information.
+        currentDay.html(
+            event.date.format(Globals.todaysDateFormat)
+        );
+        
+        console.log(currentDay);
+
+        // If there are any events on the day, lets add them. 
+        var htmlString = Globals.eventTemplate.render(Object.assign({}, event, {
+            title: event.title,
+            link: event.link,
+            date: event.date.format(Globals.eventDayFormat),
+            location: event.location || 'Home',
+            day: event.date.format(Globals.todaysDateFormat),
+            time: event.date.format(Globals.shortTimeFormat) 
+        })); 
+        currentEvents.html(htmlString);
+        console.log(currentEvents);
+    }
+}
+
+// Export to browserify and non browserify. Remove the apropriate one given
+// build system, or leave them and live with the minimal consequences.
+window.Calendar = Calendar;
+module.exports  = Calendar;

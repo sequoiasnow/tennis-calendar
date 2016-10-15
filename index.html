@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="dist/main.css" />
+  <link rel="stylesheet" href="dist/font-awesome.min.css" />
+  <title>Test Calendar</title>
+</head>
+<body>
+  <div id="calendar-div">
+  </div>
+  <script   src="http://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+  <script src="dist/calendar.js"></script>
+  <script>
+  new Calendar('#calendar-div', [
+    {
+      start: 143635288,
+      type: 'practice',
+      title: 'Tue 10/12/2016',
+      link: '',
+      available: 'A',
+  badge: 'yes',
+      location: true
+    },
+    {
+      start: 145635288,
+      type: 'match',
+      title: 'Tue 10/12/2016 (location) SARATOGA 5WA (Beer & Brew)',
+      link: '',
+      badge: 'D1',
+      available: '',
+      confirm: 'C',
+      address: 'away'
+    },
+    {
+      type: 'event',
+      start: 144635288,
+      startEnd: 144637000,
+      title: 'A new event with some inforamtion.',
+      link: '',
+      badge: 'news',
+      address: 'Memorial Park, C 1919 Stevens Creek Blvd., Cupertino'
+    },
+    {
+      type: 'event',
+      start: '1476951934',
+      title: 'Annual Pressconfrence',
+      link: '',
+      badge: 'news',
+      address: '1600 Pennsylvania Ave NW, Washington, DC 20500'
+    }
+  ]);
+  </script>
+</body>
+</html>

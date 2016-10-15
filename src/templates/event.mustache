@@ -1,0 +1,45 @@
+<!-- Render an event with everything it could nead, date, link... etc. -->
+<div class="event">
+  <span class="date">{{date}}</span>
+  <a href="{{link}}">{{title}}</a>
+
+
+  {{#type}}
+      <div class="table-title {{type}}">
+          <span>{{type}}</span>
+      </div>
+  {{/type}}
+  
+  <table>
+      <tbody>
+          <tr class="day">
+              <td>Day</td>
+              <td>{{day}}</td>
+          </tr>
+          <tr class="time">
+              <td>Time</td>
+              <td>{{time}}</td>
+          </tr>
+          {{#location}}
+              <tr class="location">
+                  <td>Location</td>
+                  <td>{{location}}</td>
+              </tr>
+          {{/location}}
+          {{#address}}
+              <tr class="address">
+                  <td>Address</td>
+                  <td>{{address}}</td>
+              </tr>
+          {{/address}} 
+      </tbody>
+  </table>
+  
+  {{#description}}
+      <span class="description">{{description}}</span>
+  {{/description}}
+
+  {{#address}}
+      <div class="google-map"></div>
+  {{/address}}
+</div>

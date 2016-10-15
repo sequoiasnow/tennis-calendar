@@ -1,0 +1,23 @@
+{
+  "name": "tennisfolder-calendar",
+  "version": "1.0.0",
+  "description": "A calendar widget for showing upcomming matches.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:js": "browserify -t hoganify -t [ babelify --presets [ es2015 ] ] src/js/calendar.js > dist/calendar.js",
+    "build:css": "node-sass src/sass/main.scss -o dist/",
+    "watch:css": "node-sass --watch src/sass/ -o dist"
+  },
+  "author": "Sequoia Snow",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.16.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "google-maps": "^3.2.1",
+    "hogan.js": "^3.0.2",
+    "hoganify": "^0.2.0",
+    "moment": "^2.15.1"
+  }
+}
