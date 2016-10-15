@@ -84,7 +84,7 @@ class Calendar {
     bindEvents(el) {
         var dispatchFunc = this.makeCurrent;
         var self = this;
-        el.find('.calendar__days .day').on('click', function() {
+        el.find('.calendar__days .day').bind('click', function() {
             var index = $(this).data('index');
 
             // Add the class that allows us to target a certain day as selected.
